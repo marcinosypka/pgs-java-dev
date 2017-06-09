@@ -1,14 +1,13 @@
 package com.mosypka.pgsapp.Model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import org.hibernate.validator.constraints.Email;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.TreeSet;
 
 /**
@@ -25,29 +24,21 @@ public class User {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private long id;
 
-
-    @NotNull
     private String firstName;
 
-    @NotNull
     private String lastName;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @NotNull
     private String password;
 
-    @NotNull
     private String email;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    //@JsonManagedReference
     @ManyToMany(mappedBy = "users")
     private Collection<Activity> activities = new TreeSet<>();
 
-    protected  User() {
+    public  User() {
     }
 
     public User(String firstName, String lastName, String password, String email, Role role) {

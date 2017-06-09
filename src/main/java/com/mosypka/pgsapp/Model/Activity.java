@@ -1,8 +1,11 @@
 package com.mosypka.pgsapp.Model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 
@@ -18,12 +21,11 @@ public class Activity implements Comparable<Activity> {
     private String name;
     private Date startDate;
 
-    @JsonBackReference
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name="ATTENDANCE",
-            joinColumns = @JoinColumn(name="ACTIVITY_ID"),
-            inverseJoinColumns = @JoinColumn(name ="USER_ID")
+            name="attendance",
+            joinColumns = @JoinColumn(name="activity_id"),
+            inverseJoinColumns = @JoinColumn(name ="user_id")
     )
     private List<User> users;
 
